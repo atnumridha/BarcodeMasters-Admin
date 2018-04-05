@@ -25,11 +25,10 @@ import com.anup.service.BarcodeService;
 import com.anup.service.GenericService;
 import com.anup.service.GenericTempService;
 
-import fr.w3blog.zpl.model.ZebraUtils;
 import lombok.Getter;
 import lombok.Setter;
 
-@Scope(value = "session")
+@Scope(value = "request")
 @Component
 @Getter
 @Setter
@@ -232,6 +231,10 @@ public class GenericController implements Serializable {
 	}
 
 	public void save() {
+		
+		if (generic.getContainerId() == null){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Container Id is Required!", null));
+		}
 		try {
 			ip = genericTempService.findIPByUser(uname.toLowerCase());
 
@@ -366,7 +369,10 @@ public class GenericController implements Serializable {
 //				} catch (Exception e) {
 //					e.printStackTrace();
 //				}
+				
 				genericTempService.save(gt);
+				
+				genericTempService.setPrintedFlag(gt.getContainerId());
 
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Printing Finished for Container (" + gt.getContainerId() + " !)", null));
@@ -478,8 +484,6 @@ public class GenericController implements Serializable {
 
 	public void printContainer(Generic generic) {
 
-		System.out.println("I am clicked bro...!!!");
-
 		try {
 			ip = genericTempService.findIPByUser(uname.toLowerCase());
 
@@ -512,6 +516,9 @@ public class GenericController implements Serializable {
 //			} catch (Exception e) {
 //				e.printStackTrace();
 //			}
+			
+			genericService.setPrintedFlag(generic.getContainerId());
+			
 
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Printing Finished for Container (" + generic.getContainerId() + " !)", null));

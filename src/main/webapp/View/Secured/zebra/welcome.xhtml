@@ -11,37 +11,55 @@
 </h:head>
 
 <h:body style="padding: 60px;">
-	<ui:composition template="/View/Secured/zebra/template/com_zebra/commonLayout.xhtml">
-
+	<ui:composition
+		template="/View/Secured/zebra/template/commonLayout.xhtml">
 		<ui:define name="content">
-			<p:growl id="messages" />
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						Welcome Screen <small>Barcode Master Welcomes You!</small>
+					</h1>
+					<ol class="breadcrumb">
+						<li><a
+							href="#{request.contextPath}/View/Secured/zebra/welcome.jsf"><i
+								class="fa fa-hand-o-right" style="font-size: 16px"></i>
+								Navigation</a></li>
+						<li class="active">Welcome</li>
+					</ol>
+				</section>
+				<!-- Main content -->
 
-			<p:breadCrumb>
-				<p:menuitem value="BarcodeMasters" url="#{request.contextPath}/zebra/welcome.jsf" />
-				<p:menuitem value="Welcome" url="#{request.contextPath}/zebra/welcome.jsf" />
-			</p:breadCrumb>
+				<section class="content">
 
-			<b:jumbotron>
-				<b:container>
-					<h2>Welcome to Barcode Masters #{genericController.username}!</h2>
-					<p>Barcode masters highly used in Retail and Distribution
-						Industry, Considering the rapidly growing importance of Barcodes
-						in today’s market, numerous Barcode Software products have been
-						offered by software companies that claim to serve as the backbone
-						of your business. But the Barcode Masters Software is one
-						single-stop solution to end all your worries as it helps in
-						controlling the instances of shoplifting and tracking items
-						meticulously.</p>
-					<p>
-						Barcode Masters supports <b>Code128, Code39, Interleaved 2 of
-							5, Codabar, EAN-8, EAN-13, UPC-A (PNG), UPC-E (Vertical), PDF417,
-							DataMatrix, Postnet, QR</b> and many more.
-					</p>
-					<a href="#{request.contextPath}/zebra/documentation.jsf"
-						class="btn btn-lg btn-info">More Details »</a>
-				</b:container>
+					<b:jumbotron>
+						<b:container>
+							<h2>Welcome to Barcode Masters
+								#{genericController.username}!</h2>
+							<p>Barcode masters highly used in Retail and Distribution
+								Industry, Considering the rapidly growing importance of Barcodes
+								in today’s market, numerous Barcode Software products have been
+								offered by software companies that claim to serve as the
+								backbone of your business. But the Barcode Masters Software is
+								one single-stop solution to end all your worries as it helps in
+								controlling the instances of shoplifting and tracking items
+								meticulously.</p>
+							<p>
+								Barcode Masters supports <b>Code128, Code39, Interleaved 2
+									of 5, Codabar, EAN-8, EAN-13, UPC-A (PNG), UPC-E (Vertical),
+									PDF417, DataMatrix, Postnet, QR</b> and many more.
+							</p>
+							<a
+								href="#{request.contextPath}/View/Secured/zebra/documentation.jsf"
+								class="btn btn-lg btn-info">More Details »</a>
+						</b:container>
 
-			</b:jumbotron>
+					</b:jumbotron>
+
+				</section>
+
+			</div>
 		</ui:define>
 	</ui:composition>
 </h:body>

@@ -83,4 +83,8 @@ public class GenericTempService {
 		int id = addressRepository.myId(ip);
 		addressRepository.delete(id);
 	}
+	
+	public void setPrintedFlag(String contId){
+		genericTempRepository.setPrintedFlag(contId);
+	}
 }

@@ -19,8 +19,8 @@ public class CustomAuthenticationHandler extends SimpleUrlAuthenticationSuccessH
  @Override
  public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, 
 Authentication authentication) throws ServletException, IOException {
-      String userTargetUrl = "/user/welcome.jsf";
-      String adminTargetUrl = "/admin/Admin.jsf";
+      String userTargetUrl = "/View/Secured/user/welcome.jsf";
+      String adminTargetUrl = "/View/Secured/zebra/welcome.jsf";
       String zebraTargetUrl = "/View/Secured/zebra/welcome.jsf";
       Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
       if (roles.contains("ROLE_ADMIN")) {

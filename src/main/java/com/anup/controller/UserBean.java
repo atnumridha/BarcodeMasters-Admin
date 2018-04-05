@@ -5,14 +5,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.anup.entity.Role;
@@ -24,9 +26,10 @@ import com.anup.service.UserService;
  *
  * @author Raichand
  */
-@Component // with it spring can scan this class as a bean.@Named also does same thing
-@ManagedBean(name = "userBean")
-@ViewScoped
+@Component // with it spring can scan this class as a bean.@Named also does same
+			// thing
+/* @ManagedBean(name = "userBean") */
+@Scope(value = "request")
 public class UserBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -39,14 +42,25 @@ public class UserBean implements Serializable {
 
 	private String ConfirmPassword;
 	List<User> userList;
+	private List<String> roles;
+	private String role;
 	private User user = new User();
+
+	@PostConstruct
+	public void init() {
+		roles = new ArrayList<>();
+		roles.add("ROLE_USER");
+		roles.add("ROLE_ZEBRA");
+		roles.add("ROLE_ADMIN");
+	}
 
 	/**
 	 * Add User
 	 *
 	 * @return String - Response Message
 	 */
-	public String addUser() {
+	@SuppressWarnings("deprecation")
+	public void addUser() {
 		try {
 			// this.validateUser();
 			int newid = userService.CreateNewUserId();
@@ -54,10 +68,19 @@ public class UserBean implements Serializable {
 			// Validating user hereitself
 			if (!(user.getPassword().equals(getConfirmPassword()))) {
 
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Password",
-						"Password and confirm password does not match");
-				RequestContext.getCurrentInstance().showMessageInDialog(message);
-			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Password", "Password and confirm password does not match."));
+
+			}
+			
+			if ((this.role.isEmpty()) | (this.role.equals(""))  ) {
+
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Error", "Role Cannot be Empty."));
+
+			} 
+			
+			else {
 
 				String cryptedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
 				newuser.setUserId(newid);
@@ -74,7 +97,7 @@ public class UserBean implements Serializable {
 
 					newrole.setRoleId(newid);
 					newrole.setUser(newuser);
-					newrole.setRole("ROLE_ZEBRA");
+					newrole.setRole(this.getRole());
 
 				}
 
@@ -87,17 +110,22 @@ public class UserBean implements Serializable {
 						"User Information saved successfully.");
 				RequestContext.getCurrentInstance().showMessageInDialog(message);
 
-				return "login";
+				reset();
+
+				// return "login";
 			}
 
-			return "";
+			// return "";
 
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Save ",
 					"Failed to save  User Information .");
 			RequestContext.getCurrentInstance().showMessageInDialog(message);
-			return null;
+
+			reset();
+
+			// return null;
 		}
 
 	}
@@ -127,6 +155,7 @@ public class UserBean implements Serializable {
 	public void reset() {
 		user.reset();
 		this.ConfirmPassword = "";
+		System.out.println("Reset Called...............!");
 	}
 
 	/**
@@ -204,6 +233,22 @@ public class UserBean implements Serializable {
 
 	public void setConfirmPassword(String ConfirmPassword) {
 		this.ConfirmPassword = ConfirmPassword;
+	}
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }

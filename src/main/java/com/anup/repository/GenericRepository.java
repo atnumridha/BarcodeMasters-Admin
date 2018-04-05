@@ -3,7 +3,9 @@ package com.anup.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.anup.entity.Generic;
 
@@ -26,4 +28,9 @@ public interface GenericRepository extends JpaRepository<Generic, Long> {
 
 	@Query(value = "SELECT * from xx_generic_labels_temp ORDER BY 1 DESC", nativeQuery = true)
 	List<Generic> findAllGenericTempByDesc();
+	
+	@Transactional
+	@Modifying
+	@Query(value = "update xx_generic_labels set printed_flag = '1' where container_id = ?1", nativeQuery = true)
+	void setPrintedFlag(String contId);
 }

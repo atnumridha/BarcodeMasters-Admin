@@ -9,32 +9,41 @@
 	<meta name="viewport" content="width=device-width" />
 
 </h:head>
+
 <h:body style="padding: 60px;">
-
-	<ui:composition template="/View/Secured/zebra/template/com_zebra/commonLayout.xhtml">
-
+	<ui:composition
+		template="/View/Secured/zebra/template/commonLayout.xhtml">
 		<ui:define name="content">
-			<p:growl id="messages" />
 
-			<p:breadCrumb>
-				<p:menuitem value="BarcodeMasters"
-					url="#{request.contextPath}/zebra/welcome.jsf" />
-				<p:menuitem value="Documentation"
-					url="#{request.contextPath}/zebra/documentation" />
-			</p:breadCrumb>
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						Documentation <small>User Manual!</small>
+					</h1>
+					<ol class="breadcrumb">
+						<li><a
+							href="#{request.contextPath}/View/Secured/zebra/welcome.jsf"><i
+								class="fa fa-hand-o-right" style="font-size: 16px"></i>
+								Navigation</a></li>
+						<li class="active">Help</li>
+					</ol>
+				</section>
+				<!-- Main content -->
 
-			<b:jumbotron>
-				<b:container>
-					<object type="application/pdf"
-						data="#{resource['static/pdf/Barcode_master_UG.pdf']}?pfdrid_c=true"
-						height="600px" width="100%" internalinstanceid="40">
+				<section class="content">
+
+					<object type="application/pdf" name="Documentation"
+						data="#{request.contextPath}/View/Secured/zebra/static/pdf/UG.pdf?pfdrid_c=true"
+						height="550px" width="100%" internalinstanceid="251">
 						Your browser can't display pdf, <a
-							href="#{resource['static/pdf/Barcode_master_UG.pdf']}">click</a>
+							href="#{request.contextPath}/View/Secured/zebra/static/pdf/UG.pdf">click</a>
 						to download pdf instead.
-
 					</object>
-				</b:container>
-			</b:jumbotron>
+
+				</section>
+			</div>
 		</ui:define>
 	</ui:composition>
 </h:body>

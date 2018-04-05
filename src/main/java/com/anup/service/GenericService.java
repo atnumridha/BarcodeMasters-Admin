@@ -47,4 +47,8 @@ public class GenericService {
 	public List<Generic> findAllByDesc() {
 		return genericRepository.findAllByDesc();
 	}
+	
+	public void setPrintedFlag(String contId){
+		genericRepository.setPrintedFlag(contId);
+	}
 }

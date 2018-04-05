@@ -12,7 +12,6 @@ import com.anup.service.GenericTempService;
 
 import lombok.Getter;
 import lombok.Setter;
-import oracle.net.aso.h;
 
 @Scope(value = "session")
 //// Spring-specific annotation

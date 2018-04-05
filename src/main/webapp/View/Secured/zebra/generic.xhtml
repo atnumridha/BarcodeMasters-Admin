@@ -9,106 +9,121 @@
 	<meta name="viewport" content="width=device-width" />
 
 </h:head>
+
 <h:body style="padding: 60px;">
-
-	<ui:composition template="/View/Secured/zebra/template/com_zebra/commonLayout.xhtml">
-
+	<ui:composition
+		template="/View/Secured/zebra/template/commonLayout.xhtml">
 		<ui:define name="content">
 
-			<p:messages globalOnly="true" />
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						Generic Labels <small>Print Generic Labels here!</small>
+					</h1>
+					<ol class="breadcrumb">
+						<li><a href="#{request.contextPath}/View/Secured/zebra/welcome.jsf"><i class="fa fa-hand-o-right" style="font-size:16px"></i>
+								Navigation</a></li>
+						<li class="active">Generic</li>
+					</ol>
+				</section>
+				<!-- Main content -->
 
-			<p:growl id="messages" />
+				<section class="content">
 
-			<p:breadCrumb>
-				<p:menuitem value="BarcodeMasters"
-					url="#{request.contextPath}/zebra/welcome.jsf" />
-				<p:menuitem value="Generic Labels"
-					url="#{request.contextPath}/zebra/generic.jsf" />
-			</p:breadCrumb>
+					<b:jumbotron>
 
-			<b:jumbotron>
-				<b:container>
+						<b:container>
 
-					<h3>Generic Labels Screen</h3>
+							<center>
+							
+							<p:messages id="messages"/>
 
-					<br />
+								<!-- <p:messages globalOnly="true" /> -->
+<!-- 								<p:growl id="messages" />
+ -->
 
-					<center>
-						<b:column span="7">
-							<h:form id="searchForm">
-								<p:panelGrid>
-									<p:autoComplete id="containerId"
-										value="#{genericController.containerId}"
-										itemLabel="#{genericController.containerId}"
-										itemValue="#{genericController.containerId}"
-										completeMethod="#{genericController.search}"
-										valueChangeListener="#{genericController.changed}"
-										immediate="true" inputStyle="width: 330px; height:30px"
-										placeholder="Enter the Container Id to Search" required="true"
-										requiredMessage="Please The Enter Container to start..."
-										onselect="#{genericController.search(genericController.containerId)}"
-										cacheTimeout="2" />
-									<p:commandButton value="Search"
-										update="genericTable searchForm"
-										action="#{genericController.search(genericController.containerId)}"
-										icon="fa fa-search" />
-								</p:panelGrid>
-							</h:form>
 
-							<br />
+								<b:column span="7">
+									<h:form id="searchForm">
+										<p:panelGrid>
+											<p:autoComplete id="containerId"
+												value="#{genericController.containerId}"
+												itemLabel="#{genericController.containerId}"
+												itemValue="#{genericController.containerId}"
+												completeMethod="#{genericController.search}"
+												valueChangeListener="#{genericController.changed}"
+												immediate="true" inputStyle="width: 270px; height:28px"
+												placeholder="Enter the Container Id to Search"
+												required="true"
+												requiredMessage="Please The Enter Container to start..."
+												onselect="#{genericController.search(genericController.containerId)}"
+												cacheTimeout="2" 
+												style="text-align: right"/>
+											<p:commandButton value="Search"  style="width: 80px; height:28px; text-align: right"
+												update="genericTable searchForm"
+												action="#{genericController.search(genericController.containerId)}" 
+												icon="fa fa-search" />
+										</p:panelGrid>
+									</h:form>
 
-							<h:form id="saveBatchForm">
-								<p:focus />
+									<br />
 
-								<center>
-									<p:panelGrid columns="2"> 
+									<h:form id="saveBatchForm">
+										<p:focus />
+
+										<center>
+											<p:panelGrid columns="2"> 
 				
 				Facility ID:
 								<p:selectOneMenu value="#{genericController.generic.facilityId}">
-											<f:selectItems value="#{genericController.facility}" />
-										</p:selectOneMenu>
+													<f:selectItems value="#{genericController.facility}"  />
+												</p:selectOneMenu>
 					
 					Number of Containers:
 		<p:inputText value="#{genericController.containerQty}" required="true"
-											requiredMessage="Container Qty Cannot be Null!"
-											placeholder="No. Of Containers" />
-									</p:panelGrid>
-									<br />
-									<!-- Adding Refresh Button -->
+													requiredMessage="Container Qty Cannot be Null!"
+													placeholder="No. Of Containers" />
+											</p:panelGrid>
+											<br />
+											<!-- Adding Refresh Button -->
 
-									<!-- End Refresh Button -->
+											<!-- End Refresh Button -->
 
-									<p:commandButton value="Save Bulk"
-										action="#{genericController.saveBatch()}" icon="fa fa-upload"
-										update="genericForm :genericTable :messages saveBatchForm" />
-								</center>
-							</h:form>
-						</b:column>
-						<br />
+											<p:commandButton value="Save Bulk"
+												action="#{genericController.saveBatch()}"
+												icon="fa fa-upload"
+												update="genericForm :genericTable :messages saveBatchForm" oncomplete="hideMsg()" />
+										</center>
+									</h:form>
+								</b:column>
+								<br />
 
-						<h:form id="genericForm">
+								<h:form id="genericForm">
 
-							<p:focus />
+									<p:focus />
 
-							<p:panelGrid columns="2">
+									<p:panelGrid columns="2">
 		Facility ID:
 		<!-- <p:inputText value="#{genericController.generic.facilityId}" /> -->
-								<p:selectOneMenu value="#{genericController.generic.facilityId}">
-									<f:selectItems value="#{genericController.facility}" />
-								</p:selectOneMenu>
+										<p:selectOneMenu
+											value="#{genericController.generic.facilityId}">
+											<f:selectItems value="#{genericController.facility}" />
+										</p:selectOneMenu>
 		
 		Container ID:
 		<p:inputText value="#{genericController.generic.containerId}"
-									placeholder="Container ID" />
-							</p:panelGrid>
-							<br />
+											placeholder="Container ID"/>
+									</p:panelGrid>
+									<br />
 
-							<p:commandButton value="Save"
-								action="#{genericController.save()}" icon="fa fa-save"
-								update="genericForm :genericTable :messages genericForm" />
-						</h:form>
+									<p:commandButton value="Save"
+										action="#{genericController.save()}" icon="fa fa-save"
+										update="genericForm :genericTable :messages genericForm" oncomplete="hideMsg()"/>
+								</h:form>
 
-						<!-- Dont Want to Use with Zebra
+								<!-- Dont Want to Use with Zebra
 					<br/>
 				<br/>
 				<h:form>
@@ -118,48 +133,50 @@
 				</h:form>
 				<br />  -->
 
-						<br /> <br />
+								<br /> <br />
 
-						<p:dataTable id="genericTable" var="generic" styleClass="myTable"
-							value="#{genericController.generics}" paginator="true" rows="2"
-							editable="true" reflow="true">
+								<p:dataTable id="genericTable" var="generic"
+									styleClass="myTable" value="#{genericController.generics}"
+									paginator="true" rows="2" editable="true" reflow="true">
 
-							<p:column headerText="Facility Id">
-								<h:outputText value="#{generic.facilityId}"
-									filterMatchMode="contains" />
-							</p:column>
+									<p:column headerText="Facility Id">
+										<h:outputText value="#{generic.facilityId}"
+											filterMatchMode="contains" />
+									</p:column>
 
 
-							<p:column headerText="Print Group Label Nbr">
-								<h:outputText value="#{generic.printGroupLabelNbr}"
-									filterMatchMode="contains" />
-							</p:column>
+									<p:column headerText="Print Group Label Nbr">
+										<h:outputText value="#{generic.printGroupLabelNbr}"
+											filterMatchMode="contains" />
+									</p:column>
 
-							<p:column headerText="Container Id">
-								<h:outputText value="#{generic.containerId}"
-									filterMatchMode="contains" />
-							</p:column>
+									<p:column headerText="Container Id">
+										<h:outputText value="#{generic.containerId}"
+											filterMatchMode="contains" />
+									</p:column>
 
-							<p:column headerText="Barcode">
-								<p:barcode value="#{generic.containerId}"
-									type="#{genericController.barcodeType}" width="125px;"
-									height="60px;" />
-							</p:column>
+									<p:column headerText="Barcode">
+										<p:barcode value="#{generic.containerId}"
+											type="#{genericController.barcodeType}" width="125px;"
+											height="60px;" />
+									</p:column>
 
-							<p:column headerText="Print">
-								<h:form>
-									<p:commandButton value="Print Me"
-										action="#{genericController.printContainer(generic)}">
-									</p:commandButton>
-								</h:form>
-							</p:column>
+									<p:column headerText="Print">
+										<h:form>
+											<p:commandButton value="Print Me"
+												action="#{genericController.printContainer(generic)}" >
+											</p:commandButton>
+										</h:form>
+									</p:column>
 
-						</p:dataTable>
-						<input type="hidden" name="${_csrf.parameterName}"
-							value="${_csrf.token}" />
-					</center>
-				</b:container>
-			</b:jumbotron>
+								</p:dataTable>
+								<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" />
+							</center>
+						</b:container>
+					</b:jumbotron>
+				</section>
+			</div>
 		</ui:define>
 	</ui:composition>
 </h:body>

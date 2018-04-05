@@ -39,6 +39,9 @@ public class GenericTemp implements Serializable {
 
 	@Column(name = "CONTAINER_ID")
 	private String containerId;
+	
+	@Column(name="Printed_Flag")
+	private int printedFlag;
 
 	public GenericTemp() {
 

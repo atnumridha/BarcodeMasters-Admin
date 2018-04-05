@@ -8,87 +8,90 @@
 	<title>${title}</title>
 	<meta name="viewport" content="width=device-width" />
 
-	<style>
-/* .ui-dialog {
-	background-image: url("#{resource['static/images/newbg.jpg']}");
-}
- */
-.bgClass {
-	background: green;
-}
-</style>
-}
-
 </h:head>
-<h:body style="padding: 60px;">
-	<ui:composition template="/View/Secured/zebra/template/com_zebra/commonLayout.xhtml">
 
+<h:body style="padding: 60px;">
+	<ui:composition
+		template="/View/Secured/zebra/template/commonLayout.xhtml">
 		<ui:define name="content">
 
-			<p:growl id="messages" />
-			
-			<p:breadCrumb>
-				<p:menuitem value="BarcodeMasters"
-					url="#{request.contextPath}/zebra/welcome.jsf" />
-				<p:menuitem value="Settings"
-					url="#{request.contextPath}/zebra/settings.jsf" />
-				<p:menuitem value="Printer Setup"
-					url="#{request.contextPath}/zebra/settings.jsf" />
-			</p:breadCrumb>
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						Printer Properties <small>Set Printer Properties here!</small>
+					</h1>
+					<ol class="breadcrumb">
+						<li><a
+							href="#{request.contextPath}/View/Secured/zebra/welcome.jsf"><i
+								class="fa fa-hand-o-right" style="font-size: 16px"></i>
+								Navigation</a></li>
+						<li class="active">Printer Properties</li>
+					</ol>
+				</section>
+				<!-- Main content -->
 
-			<b:jumbotron>
-				<b:container>
-				
-				<h3>Settings Screen</h3>
+				<section class="content">
 
-					<br />
-					<br />
-					<h:form>
-						<p:focus />
+					<br /> <br />
 
-						<p:panelGrid columns="6">
+					<b:jumbotron>
+						<b:container>
+
+							<center>
+
+								<p:messages id="messages" />
+
+								<h:form>
+									<p:focus />
+
+									<p:panelGrid columns="6">
 					
 		
 		Barcode Type: 	 
 		<p:selectOneMenu value="#{genericController.barcodeType}">
 
-								<f:selectItem itemLabel="Code128" itemValue="code128" />
-								<f:selectItem itemLabel="Codabar" itemValue="codabar" />
-								<f:selectItem itemLabel="Code39" itemValue="code39" />
-								<f:selectItem itemLabel="Interleaved 2 of 5" itemValue="int2of5" />
-								<f:selectItem itemLabel="EAN-8" itemValue="ean8" />
-								<f:selectItem itemLabel="EAN-13" itemValue="ean13" />
-								<f:selectItem itemLabel="UPC-A (PNG)" itemValue="upca" />
-								<f:selectItem itemLabel="UPC-E (Vertical)" itemValue="upce" />
-								<f:selectItem itemLabel="PDF417" itemValue="pdf417" />
-								<f:selectItem itemLabel="DataMatrix" itemValue="datamatrix" />
-								<f:selectItem itemLabel="Postnet" itemValue="postnet" />
-								<f:selectItem itemLabel="QR" itemValue="qr" />
-								<p:ajax event="change" />
-							</p:selectOneMenu>
+											<f:selectItem itemLabel="Code128" itemValue="code128" />
+											<f:selectItem itemLabel="Codabar" itemValue="codabar" />
+											<f:selectItem itemLabel="Code39" itemValue="code39" />
+											<f:selectItem itemLabel="Interleaved 2 of 5"
+												itemValue="int2of5" />
+											<f:selectItem itemLabel="EAN-8" itemValue="ean8" />
+											<f:selectItem itemLabel="EAN-13" itemValue="ean13" />
+											<f:selectItem itemLabel="UPC-A (PNG)" itemValue="upca" />
+											<f:selectItem itemLabel="UPC-E (Vertical)" itemValue="upce" />
+											<f:selectItem itemLabel="PDF417" itemValue="pdf417" />
+											<f:selectItem itemLabel="DataMatrix" itemValue="datamatrix" />
+											<f:selectItem itemLabel="Postnet" itemValue="postnet" />
+											<f:selectItem itemLabel="QR" itemValue="qr" />
+											<p:ajax event="change" />
+										</p:selectOneMenu>
 							
 		Printer Queue: 	 
 		<p:selectOneMenu value="#{genericController.ip}">
-								<f:selectItems value="#{genericController.addresses}" />
-								<p:ajax event="change" />
-							</p:selectOneMenu>
+											<f:selectItems value="#{genericController.addresses}" />
+											<p:ajax event="change" />
+										</p:selectOneMenu>
 
-							<p:commandButton value="Save Printer" update=":messages"
-								action="#{genericController.setPrinter(genericController.ip)}"
-								icon="fa fa-save" />
-								
-							<p:commandButton value="Delete Printer" update=":messages"
-								action="#{genericController.deletePrinter(genericController.ip)}"
-								icon="fa fa-trash-o"/>
+										<p:commandButton value="Save Printer" update=":messages"
+											action="#{genericController.setPrinter(genericController.ip)}"
+											icon="fa fa-save" oncomplete="hideMsg()" />
 
-						</p:panelGrid>
+										<p:commandButton value="Delete Printer" update=":messages"
+											action="#{genericController.deletePrinter(genericController.ip)}"
+											icon="fa fa-trash-o" oncomplete="hideMsg()" />
 
-					</h:form>
+									</p:panelGrid>
 
-				</b:container>
+								</h:form>
+							</center>
+						</b:container>
 
-			</b:jumbotron>
+					</b:jumbotron>
 
+				</section>
+			</div>
 		</ui:define>
 	</ui:composition>
 </h:body>

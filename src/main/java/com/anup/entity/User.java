@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -19,8 +20,7 @@ import org.hibernate.validator.constraints.Email;
  * @RRay
  */
 @Entity
-@Table(name = "users",uniqueConstraints = @UniqueConstraint(columnNames = { "user_name",
-		"password" }))
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = { "user_name", "password" }))
 
 public class User implements java.io.Serializable {
 
@@ -32,17 +32,26 @@ public class User implements java.io.Serializable {
 	@Column(name = "USER_ID")
 	private int userId;
 	@Column(name = "FIRST_NAME")
+	@NotNull(message = "First Name is required")
 	private String firstName;
 	@Column(name = "LAST_NAME")
+	@NotNull(message = "Last Name is required")
 	private String lastName;
-	@Email(message="Not a Valid Email Address!")
+	@Email(message = "Not a Valid Email Address!")
+	@NotNull(message = "Email is required")
 	private String email;
-	
-//	@Size(min = 6, message = "Username must be minimum of 6 chracters, Try again!")
+
+	// @Size(min = 6, message = "Username must be minimum of 6 chracters, Try
+	// again!")
+	@NotNull(message = "Username is required")
 	private String username;
-	
-//    @Size(min = 6, message = "Invalid Password, Password must be greater than or equal to 6 chracters, Try again!")
-	//@Pattern(regexp="^(?=.*\\d)(?=.*[A-Z]).{6,8}$", message="Password must have, Minimum 6 and Maximum 8 Character, Atleast 1 number, Atleast 1 alphabet in capitals, No Special char allowed")
+
+	// @Size(min = 6, message = "Invalid Password, Password must be greater than
+	// or equal to 6 chracters, Try again!")
+	// @Pattern(regexp="^(?=.*\\d)(?=.*[A-Z]).{6,8}$", message="Password must
+	// have, Minimum 6 and Maximum 8 Character, Atleast 1 number, Atleast 1
+	// alphabet in capitals, No Special char allowed")
+	@NotNull(message = "Password is required")
 	private String password;
 
 	@SuppressWarnings("unused")
@@ -132,6 +141,8 @@ public class User implements java.io.Serializable {
 		this.username = "";
 		this.roles = null;
 		this.enabled = true;
+
+		System.out.println("I am Called from User Entity..");
 
 	}
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body style="padding: 60px;">
+
+	<ui:composition>
+		<footer class="main-footer"> <!-- To the right -->
+		<div class="pull-right hidden-xs">Barcoding on Demand!</div>
+		<!-- Default to the left --> <strong>Copyrights 2018 <a
+			href="http://www.barcodemasters.in">BarcodeMasters.in</a>.
+		</strong> All rights reserved. </footer>
+
+
+		<!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+		<div class="control-sidebar-bg"></div>
+		<!-- ./wrapper -->
+
+		<!-- REQUIRED JS SCRIPTS -->
+
+		<script>
+
+		function hideMsg(){
+			$("#messages").delay(3000).hide(2000);
+			}
+					
+		
+		</script>
+
+
+		<script type="text/javascript"
+			src="#{request.contextPath}/View/Secured/zebra/static/js/bootstrap.min.js"></script>
+		<!-- Correio -->
+		<script type="text/javascript"
+			src="#{request.contextPath}/View/Secured/zebra/static/js/app.min.js"></script>
+		<!-- Correio -->
+	</ui:composition>
+</h:body>
+</html>

@@ -1,21 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
-
-
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-	<title>Register</title>
-	<!-- <link rel="stylesheet" href="resources/css/bootstrap.min.css" /> -->
-	<link href='https://fonts.googleapis.com/css?family=Andika'
-		rel='stylesheet' />
+	<title>${title}</title>
+	<meta name="viewport" content="width=device-width" />
 
 	<style>
 body {
-	background-image: url("/View/UnSecured/static/images/backg1.png");
+	/* background-image: url("/View/UnSecured/static/images/backg1.png"); */
 	font-family: 'Andika';
 	font-size: 16px;
 	font-weight: 200;
@@ -25,70 +20,95 @@ h3 {
 	text-align: center;
 }
 </style>
+
 </h:head>
-<!-- <h:body style="padding-top: 60px; background-color: #add;"> -->
-<h:body style="padding-top: 60px">
-	<center>
-		<h2 style="color: #f9f9f9">Register User</h2>
-	</center>
-	<br />
-	<center>
-		<p:growl id="messages" />
-		<h:form prependId="false" id="form">
 
-			<p:panelGrid columns="2" style="border-bottom-width: 0px;">
-				<h:outputText value="FirstName:" />
-				<p:inputText value="#{userBean.user.firstName}" id="firstname"
-					required="true" requiredMessage="FirstName is required" />
-				<h:outputText value="LastName:" />
-				<p:inputText value="#{userBean.user.lastName}" id="lastname"
-					required="true" requiredMessage="LastName is required" />
+<h:body style="padding: 60px;">
+	<ui:composition
+		template="/View/Secured/zebra/template/commonLayout.xhtml">
+		<ui:define name="content">
 
-				<h:outputText value="UserName:" />
-				<p:inputText value="#{userBean.user.username}" id="username"
-					required="true" requiredMessage="UserName is required" />
-				<h:outputText value="Email:" />
-				<p:inputText value="#{userBean.user.email}" id="email"
-					required="true" requiredMessage="Email is required">
-				</p:inputText>
-				<h:outputText value="Password:" />
-				<p:password value="#{userBean.user.password}" id="password"
-					required="true" requiredMessage="Password is required" />
-				<h:outputText value="ConfirmPassword:" />
-				<p:password value="#{userBean.confirmPassword}" id="confirmpassword"
-					required="true" requiredMessage="ConfirmPassword is required" />
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						Create User <small>Create Users here!</small>
+					</h1>
+					<ol class="breadcrumb">
+						<li><a
+							href="#{request.contextPath}/View/Secured/zebra/welcome.jsf"><i
+								class="fa fa-hand-o-right" style="font-size: 16px"></i>
+								Navigation</a></li>
+						<li class="active">Create User</li>
+					</ol>
+				</section>
+				<!-- Main content -->
+
+				<section class="content">
+
+					<b:jumbotron>
+						<b:container>
+
+							<center>
+
+								<p:messages id="messages" showDetail="true" closable="true">
+									<p:autoUpdate />
+								</p:messages>
+
+								<h:form id="form">
+
+									<p:panelGrid columns="2" style="border-bottom-width: 0px;">
+										<h:outputText value="First Name:" />
+										<p:inputText value="#{userBean.user.firstName}" id="firstname"
+											required="true" requiredMessage="First Name is required" />
+										<h:outputText value="Last Name:" />
+										<p:inputText value="#{userBean.user.lastName}" id="lastname"
+											required="true" requiredMessage="Last Name is required" />
+
+										<h:outputText value="Username:" />
+										<p:inputText value="#{userBean.user.username}" id="username"
+											required="true" requiredMessage="Username is required" />
+										<h:outputText value="Email:" />
+										<p:inputText value="#{userBean.user.email}" id="email"
+											required="true" requiredMessage="Email is required">
+										</p:inputText>
+										<h:outputText value="Password:" />
+										<p:password value="#{userBean.user.password}" id="password"
+											required="true" requiredMessage="Password is required" />
+										<h:outputText value="Confirm Password:" />
+										<p:password value="#{userBean.confirmPassword}"
+											id="confirmpassword" required="true"
+											requiredMessage="Confirm Password is required" />
+
+										<h:outputText value="Select Role:" />
+										<p:selectOneMenu value="#{userBean.role}">
+											<f:selectItems value="#{userBean.roles}" />
+
+										</p:selectOneMenu>
 
 
-			</p:panelGrid>
-			<p:spacer height="20px" width="10px">
-			</p:spacer>
-			<br />
-			<p:row>
-				<p:commandButton action="#{userBean.addUser()}" value="Register"
-					icon="fa fa-plus-square" ajax="false" />
-				<p:spacer></p:spacer>
-				<p:commandButton type="reset" value="Reset" icon="fa fa-remove"
-					ajax="false" />
+									</p:panelGrid>
+									<p:spacer height="20px" width="10px">
+									</p:spacer>
+									<br />
+									<p:row>
+										<p:commandButton action="#{userBean.addUser()}" value="Create"
+											icon="fa fa-plus-square" ajax="false" update=":messages"
+											oncomplete="hideMsg()" />
+										<p:spacer></p:spacer>
+										<p:commandButton type="reset" value="Reset"
+											action="#{userBean.reset()}" icon="fa fa-remove" ajax="false"
+											update=":messages" oncomplete="hideMsg()" />
+									</p:row>
+								</h:form>
+							</center>
+						</b:container>
+					</b:jumbotron>
 
-				<!-- <a style="color: #42b9f4"
-					href="#{request.contextPath}/View/UnSecured/login.xhtml">
-					<h2 >Sign In </h2>
-				</a> -->
-				<br />
-				<br />
-				<b:navLink value="Sign In"
-					href="#{request.contextPath}/View/UnSecured/login.jsf"
-					iconAwesome="fa-sign-in" />
-			</p:row>
-			<br />
-			<br />
-			<br />
-			<br />
-			<footer>
-			<p style="color: white">© BarcodeMasters 2017</p>
-			</footer>
-
-		</h:form>
-	</center>
+				</section>
+			</div>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>
